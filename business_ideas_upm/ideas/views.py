@@ -12,8 +12,6 @@ def list(request):
     context = {
         'ideas_list': ideas_list,
     }
-    print(ideas_list)
-    print(ideas_list[0].title)
     return HttpResponse(template.render(context, request))
 
 
