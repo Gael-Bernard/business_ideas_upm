@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
@@ -16,4 +16,8 @@ def list(request):
 
 
 def idea(request, idea_id):
-    return HttpResponse("Page of business idea "+str(idea_id))
+    try:
+        idea = BusinessIdea.objects.get (pk=idea_id)
+    except BusinessIdea.DoesNotExist:
+        raise Http404("Idea does not exist")
+    return render(request, 'ideas/detail.html', {"idea": idea})
