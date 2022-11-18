@@ -2,7 +2,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
-from .models import BusinessIdea
+from .models import BusinessIdea, IdeaComment
 
 # Create your views here.
 
@@ -20,4 +20,7 @@ def idea(request, idea_id):
         idea = BusinessIdea.objects.get (pk=idea_id)
     except BusinessIdea.DoesNotExist:
         raise Http404("Idea does not exist")
-    return render(request, 'ideas/detail.html', {"idea": idea})
+    
+    #comments = IdeaComment.objects.filter()
+    print(idea.__dir__())
+    return render(request, 'ideas/detail.html', {"idea": idea, "comments": ""})

@@ -6,3 +6,11 @@
 
     <p>{{ idea.body }}</p>
 </fieldset>
+<fieldset>
+    {% for comment in idea.ideacomment_set.all %}
+        <fieldset>
+            <label>{{ comment.publish_date }}</label> <label>{{ comment.username }}</label> 
+            <p>{{ comment.body }}</p>
+        </fieldset>
+    {% endfor %}
+</fieldset>
