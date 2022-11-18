@@ -1,0 +1,14 @@
+<form action="{% url 'ideas:idea_new_POST' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Post a new idea</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <label>Username</label><br>
+            <input type="text" name="username" value=""><br>
+            <label>Title</label><br>
+            <input type="text" name="title" value=""><br>
+            <label>Detailed description of the idea</label><br>
+            <textarea name="body" rows="4" cols="50"></textarea><br>
+    </fieldset>
+    <input type="submit" value="Submit my idea">
+</form>

@@ -1,8 +1,10 @@
-from django.http import Http404, HttpResponse
+from datetime import datetime
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
+from django.urls import reverse
 
-from .models import BusinessIdea, IdeaComment
+from .models import BusinessIdea
 
 # Create your views here.
 
@@ -24,3 +26,32 @@ def idea(request, idea_id):
     #comments = IdeaComment.objects.filter()
     print(idea.__dir__())
     return render(request, 'ideas/detail.html', {"idea": idea, "comments": ""})
+
+
+def idea_new(request):
+    return render(request, "ideas/idea_new.html")
+
+
+def idea_new_post(request):
+    print(request.POST.keys())
+    try:
+        username = request.POST['username']
+        title = request.POST["title"]
+        body = request.POST["body"]
+    except (KeyError):
+        # Redisplay the form.
+        return render(request, 'ideas/idea_new.html', {
+            'error_message': "Invalid form.",
+        })
+    
+    newIdea = BusinessIdea(
+        username = username,
+        title = title,
+        body = body,
+        publish_date = datetime.now() 
+    )
+    newIdea.save()
+    context = {
+        "idea": newIdea
+    }
+    return HttpResponseRedirect(reverse("ideas:idea", args=(newIdea.id,)))
