@@ -1,3 +1,5 @@
+<a href="{% url 'ideas:list' %}" class="button">Return to list</a><br>
+
 <form action="{% url 'ideas:idea_new_POST' %}" method="post">
     {% csrf_token %}
     <fieldset>
